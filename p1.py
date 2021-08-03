@@ -131,22 +131,39 @@ def satisfier(arreglo):
                         else:
                             if any(letra in letra for letra in respuestas):
 
-                             matching = [s for s in respuestas if any(xs in s for xs in letra)]
+                                matching = [s for s in respuestas if any(xs in s for xs in letra)]
                             letra[letra.index(il)] = matching[0].split('-')[1]
 
                     arreglo[arreglo.index(letra3)] = ','.join(letra)
 
-        print(arreglo)
+        print('el arreglo',arreglo, combinaciones[contador])
+        satifactorio = True
+        for ele in arreglo:
+            respuesta = False
+            separacion = ele.split(',')
+            for i in separacion:
+                respuesta = respuesta or i == '1'
+            satifactorio = satifactorio and respuesta
+        #     print(respuesta)
+        #     print(separacion)
+        # print(satifactorio)
+        if satifactorio:
+            return True # colocar la posicion de las combinaciones en la que dio la respuesta
         arreglo = []
 
         respuestas = []
+    return False
 
 
 #clausal('{{p},{-p,r}}')
 #clausal('{{r},{-q,-r},{-p,q,-r},{q}}')
 #print(clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}'))
 print('clausula:',clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}'))
-satisfier(clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}'))
+# da falso porque no es una clausula satisfaceble
+print(satisfier(clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}')))
+
+# da true porque es una clausula satisfaceble
+print(satisfier(clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}')))
 
 #print('\n POSITIVE')
 #satisfier(clausalRec('{{r},{-q,-r},{p,q,r},{q}}'))
