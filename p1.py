@@ -158,7 +158,7 @@ def satisfier(arreglo):
         index += 1
     return False
 
-
+print('\n=================Primera parte ==================\nsatisfacion de una operacion\n')
 #clausal('{{p},{-p,r}}')
 #clausal('{{r},{-q,-r},{-p,q,-r},{q}}')
 #print(clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}'))
@@ -167,9 +167,8 @@ print('clausula:',clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}'))
 print(satisfier(clausalRec('{{r},{-q,-r},{-p,q,-r},{q}}')))
 
 # da true porque es una clausula satisfaceble
-print(satisfier(clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}')))
-
 #print('\n POSITIVE')
-#satisfier(clausalRec('{{r},{-q,-r},{p,q,r},{q}}'))
+print('clausula:',clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}'))
+print(satisfier(clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}')))
 
 #satisfier(clausalRec('{{p,q,r},{q}}'))
