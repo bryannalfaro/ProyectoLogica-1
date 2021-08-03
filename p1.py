@@ -42,9 +42,10 @@ def satisfier(arreglo):
                 letras.append(l)
 
     combinaciones =  list(itertools.product('01', repeat= len(letras)))
-    print(combinaciones)
+    # print(combinaciones)
     arreglo1 = arreglo[:]
 
+    index = 0
     for i in range(len(combinaciones)):
         arreglo = arreglo1[:]
         contador = 0
@@ -136,7 +137,7 @@ def satisfier(arreglo):
 
                     arreglo[arreglo.index(letra3)] = ','.join(letra)
 
-        print('el arreglo',arreglo, combinaciones[contador])
+        #print('el arreglo',arreglo, combinaciones[contador])
         satifactorio = True
         for ele in arreglo:
             respuesta = False
@@ -147,11 +148,14 @@ def satisfier(arreglo):
         #     print(respuesta)
         #     print(separacion)
         # print(satifactorio)
+        valores = {}
+        for ind in range(len(letra)):
+            valores[letras[ind]] = combinaciones[index][ind]
         if satifactorio:
-            return True # colocar la posicion de las combinaciones en la que dio la respuesta
+            return True, valores # colocar la posicion de las combinaciones en la que dio la respuesta
         arreglo = []
-
         respuestas = []
+        index += 1
     return False
 
 
