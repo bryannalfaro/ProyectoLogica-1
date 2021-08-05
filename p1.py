@@ -185,7 +185,19 @@ print(satisfier(clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}')))
 # satisfier(clausalRec('{{p,q,r},{q}}'))
 
 def dpll(clausula, I):
+
+    # Declaracion de variables
     lista = []
+    casov = copia.deepcopy(clausula)
+    casof = copia.deepcopy(clausula)
+    copiaI1 = copia.deepcopy(I)
+    copiaI2 = copia.deepcopy(I)
+    bandera1 = False
+    bandera2 = False
+
+    # Inicio del programa
+
+    # Se relizan las validaciones
     if (len(clausula) == 0):
         return True, I
 
@@ -203,7 +215,7 @@ def dpll(clausula, I):
     ListaRandom = lista[random.randint(0, len(lista) - 1)]
     formato = "-" + ListaRandom
 
-    casov = copia.deepcopy(clausula)
+    
 
     for item in casov:
         if ListaRandom in item:
@@ -211,19 +223,15 @@ def dpll(clausula, I):
         elif formato in item:
             item.remove(formato)
 
-    copiaI1 = copia.deepcopy(I)
-    bandera1 = False
     for item in copiaI1:
-        if ListaRandom in item:
+        if (ListaRandom in item):
             bandera1 = True
-    if not bandera1:
+    if (not bandera1):
         copiaI1.append({ListaRandom: 1})
 
         result, I1 = dpll(casov, copiaI1)
         if result:
             return True, I1
-
-    casof = copia.deepcopy(clausula)
     
     for item in casof:
         if formato in item:
@@ -231,8 +239,6 @@ def dpll(clausula, I):
         elif ListaRandom in item:
             item.remove(ListaRandom)
 
-    copiaI2 = copia.deepcopy(I)
-    bandera2 = False
     for item in copiaI2:
         if ListaRandom in item:
             bandera2 = True
