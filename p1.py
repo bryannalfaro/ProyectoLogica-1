@@ -1,5 +1,5 @@
 import itertools
-import copy as cp
+import copy as copia
 import random
 
 # https://stackoverflow.com/questions/4843158/check-if-a-string-is-a-substring-of-items-in-a-python-list-of-strings
@@ -7,7 +7,6 @@ import random
 # https://stackoverflow.com/questions/1228299/changing-one-character-in-a-string
 # https://www.delftstack.com/es/howto/python/python-list-replace-element/
 # https://www.askpython.com/python/list/find-string-in-list-python
-
 
 def clausal(str):
     arreglo = []
@@ -185,65 +184,62 @@ print(satisfier(clausalRec('{{-p,-q,-r},{q,-r,p},{-p,q,r}}')))
 
 # satisfier(clausalRec('{{p,q,r},{q}}'))
 
-def dpll(clause, I):
-    if len(clause) == 0:
+def dpll(clausula, I):
+    lista = []
+    if (len(clausula) == 0):
         return True, I
 
-    for item in clause:
-        if len(item) == 0:
+    for elemento in clausula:
+        if (len(elemento) == 0):
             return False, None
 
-    variables = []
-
-    for item in clause:
-        for var in item:
-            if var[0] == "-":
+    for elemento in clausula:
+        for var in elemento:
+            if (var[0] == "-"):
                 var = var[1]
-            if not var in variables:
-                variables.append(var)
+            if (not var in lista):
+                lista.append(var)
 
-    L = variables[random.randint(0, len(variables) - 1)]
-    Lc = "-" + L
+    ListaRandom = lista[random.randint(0, len(lista) - 1)]
+    formato = "-" + ListaRandom
 
-    # caso verdadero de la variable
-    Bc = cp.deepcopy(clause)
+    casov = copia.deepcopy(clausula)
 
-    for item in Bc:
-        if L in item:
-            Bc.remove(item)
-        elif Lc in item:
-            item.remove(Lc)
+    for item in casov:
+        if ListaRandom in item:
+            casov.remove(item)
+        elif formato in item:
+            item.remove(formato)
 
-    Ic = cp.deepcopy(I)
-    isInIc = False
-    for item in Ic:
-        if L in item:
-            isInIc = True
-    if not isInIc:
-        Ic.append({L: 1})
+    copiaI1 = copia.deepcopy(I)
+    bandera1 = False
+    for item in copiaI1:
+        if ListaRandom in item:
+            bandera1 = True
+    if not bandera1:
+        copiaI1.append({ListaRandom: 1})
 
-        result, I1 = dpll(Bc, Ic)
+        result, I1 = dpll(casov, copiaI1)
         if result:
             return True, I1
 
-    # caso falso de la variable
-    Bc2 = cp.deepcopy(clause)
+    casof = copia.deepcopy(clausula)
+    
+    for item in casof:
+        if formato in item:
+            casof.remove(item)
+        elif ListaRandom in item:
+            item.remove(ListaRandom)
 
-    for item in Bc2:
-        if Lc in item:
-            Bc2.remove(item)
-        elif L in item:
-            item.remove(L)
+    copiaI2 = copia.deepcopy(I)
+    bandera2 = False
+    for item in copiaI2:
+        if ListaRandom in item:
+            bandera2 = True
+    if not bandera2:
+        copiaI2.append({ListaRandom: 0})
 
-    Ic2 = cp.deepcopy(I)
-    isInIc2 = False
-    for item in Ic2:
-        if L in item:
-            isInIc2 = True
-    if not isInIc2:
-        Ic2.append({L: 0})
-
-        result2, I2 = dpll(Bc2, Ic2)
+        result2, I2 = dpll(casof, copiaI2)
         if result2:
             return True, I2
 
